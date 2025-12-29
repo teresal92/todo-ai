@@ -69,7 +69,11 @@ function App() {
   }
 
   function handleToggleTodo(id: string) {
-    console.log(id);
+    setTodos((prev) => {
+      return prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      );
+    });
   }
 
   return (

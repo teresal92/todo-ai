@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import './App.css';
-import { Button } from './components/ui/button';
-import { todos as TODO_PLACEHOLDER } from './data';
-import type { Todo } from './types';
+import { useState } from "react";
+import "./App.css";
+import { Button } from "./components/ui/button";
+import { todos as TODO_PLACEHOLDER } from "./data";
+import type { Todo } from "./types";
+import TodoList from "./todo-list";
 
 /*
 App Scaffolding
@@ -43,7 +44,7 @@ TODO: Confirmation Dialog
 */
 
 function App() {
-  const [pendingTodo, setPendingTodo] = useState('');
+  const [pendingTodo, setPendingTodo] = useState("");
   const [todos, setTodos] = useState<Todo[]>(TODO_PLACEHOLDER);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -55,7 +56,7 @@ function App() {
       const newTodo: Todo = {
         id: crypto.randomUUID(),
         title: pendingTodo,
-        category: 'Work',
+        category: "Work",
         completed: false,
         createdAt: timestamp,
         updatedAt: timestamp,
@@ -64,7 +65,11 @@ function App() {
       return [...prev, newTodo];
     });
 
-    setPendingTodo('');
+    setPendingTodo("");
+  }
+
+  function handleToggleTodo(id: string) {
+    console.log(id);
   }
 
   return (
@@ -91,12 +96,7 @@ function App() {
         <Button type="submit">Add</Button>
       </form>
 
-      {/* Todo List */}
-      <div className="flex w-full flex-col gap-4">
-        {todos.map((todo) => (
-          <div key={todo.id}>{todo.title}</div>
-        ))}
-      </div>
+      <TodoList todos={todos} handleToggleTodo={handleToggleTodo} />
     </main>
   );
 }

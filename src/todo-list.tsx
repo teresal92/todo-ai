@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Button } from "./components/ui/button";
-import type { Todo } from "./types";
+import { useState } from 'react';
+import { Button } from './components/ui/button';
+import type { Todo } from './types';
 
 interface TodoListProps {
   todos: Todo[];
@@ -32,7 +32,7 @@ export default function TodoList({ todos, handleToggleTodo }: TodoListProps) {
             {isEditing(id) ? (
               <>
                 <input value={title} />
-                <Button variant="ghost" onClick={() => console.log("saving!")}>
+                <Button variant="ghost" onClick={() => console.log('saving!')}>
                   Save
                 </Button>
               </>

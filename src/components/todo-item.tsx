@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import type { Todo } from "@/types";
-import { Trash, Edit, Save } from "lucide-react";
+import { Trash, Edit, Save, X } from "lucide-react";
 import { useState } from "react";
 import { Input } from "./ui/input";
 
@@ -38,6 +38,8 @@ export default function TodoItem({
     setPendingTodo({});
   };
 
+  const handleCancel = () => setIsEditing(false);
+
   return (
     <li
       key={id}
@@ -58,6 +60,9 @@ export default function TodoItem({
           />
           <Button variant="ghost" aria-label="Save" onClick={handleSave}>
             <Save size={14} />
+          </Button>
+          <Button variant="ghost" aria-label="Cancel" onClick={handleCancel}>
+            <X size={14} />
           </Button>
         </>
       ) : (

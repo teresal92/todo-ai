@@ -29,12 +29,9 @@ export default function TodoItem({
       {isEditing ? (
         <>
           <Input id={todoId} value={title} />
-          <Label htmlFor={todoId}>
-            <span className="sr-only">Edit todo</span>
-          </Label>
-          <Button variant="ghost">
+          <Label htmlFor={todoId} className="sr-only"></Label>
+          <Button variant="ghost" aria-label="Save">
             <Save size={14} />
-            <span className="sr-only">Save</span>
           </Button>
         </>
       ) : (
@@ -49,13 +46,19 @@ export default function TodoItem({
           </div>
 
           <div className="flex items-center gap-1">
-            <Button variant="ghost" onClick={() => setIsEditing(!isEditing)}>
+            <Button
+              variant="ghost"
+              onClick={() => setIsEditing(!isEditing)}
+              aria-label="Edit"
+            >
               <Edit size={14} />
-              <span className="sr-only">Edit</span>
             </Button>
-            <Button variant="ghost" onClick={() => onDelete(id)}>
+            <Button
+              variant="ghost"
+              onClick={() => onDelete(id)}
+              aria-label="Delete"
+            >
               <Trash size={14} />
-              <span className="sr-only">Delete</span>
             </Button>
           </div>
         </>

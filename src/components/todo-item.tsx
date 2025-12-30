@@ -41,10 +41,7 @@ export default function TodoItem({
   const handleCancel = () => setIsEditing(false);
 
   return (
-    <li
-      key={id}
-      className="flex items-center justify-between gap-2 rounded-sm p-4 outline-1"
-    >
+    <li className="flex items-center justify-between gap-2 rounded-sm p-4 outline-1">
       {isEditing ? (
         <>
           <Label htmlFor={todoId} className="sr-only"></Label>
@@ -79,7 +76,10 @@ export default function TodoItem({
           <div className="flex items-center gap-1">
             <Button
               variant="ghost"
-              onClick={() => setIsEditing(!isEditing)}
+              onClick={() => {
+                setIsEditing(true);
+                setPendingTodo(todo);
+              }}
               aria-label="Edit"
             >
               <Edit size={14} />

@@ -82,16 +82,14 @@ function App() {
 
   const handleUpdate = (id: string, updatedTodo: Partial<Todo>) => {
     setTodos((prev) => {
-      return [...prev].map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            ...updatedTodo,
-          };
-        } else {
-          return todo;
-        }
-      });
+      return prev.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              ...updatedTodo,
+            }
+          : todo,
+      );
     });
   };
 

@@ -50,6 +50,8 @@ function App() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!pendingTodo.trim()) return;
+
     setTodos((prev) => {
       const timestamp = new Date().toISOString();
 
@@ -77,7 +79,7 @@ function App() {
   };
 
   const handleDelete = (id: string) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
 
   const handleUpdate = (id: string, updatedTodo: Partial<Todo>) => {

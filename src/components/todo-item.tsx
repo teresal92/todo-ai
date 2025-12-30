@@ -22,20 +22,20 @@ export default function TodoItem({
   const { id, title, completed } = todo;
   const todoId = `todo-${id}`;
   const [isEditing, setIsEditing] = useState(false);
-  const [pendingTodo, setPendingTodo] = useState<Partial<Todo> | null>(null);
+  const [pendingTodo, setPendingTodo] = useState<Partial<Todo>>({});
 
   const handleSave = () => {
     const timestamp = new Date().toISOString();
 
     const updatedTodo = {
       ...todo,
-      ...pendingTodo,
+      ...(pendingTodo ?? {}),
       updatedAt: timestamp,
     };
 
     onUpdate(id, updatedTodo);
     setIsEditing(false);
-    setPendingTodo(null);
+    setPendingTodo({});
   };
 
   return (

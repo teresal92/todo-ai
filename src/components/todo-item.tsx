@@ -8,9 +8,15 @@ import { Input } from "./ui/input";
 
 interface TodoItemProps {
   todo: Todo;
+  onToggleComplete: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export default function TodoItem({ todo }: TodoItemProps) {
+export default function TodoItem({
+  todo,
+  onDelete,
+  onToggleComplete,
+}: TodoItemProps) {
   const { id, title, completed } = todo;
   const todoId = `todo-${id}`;
   const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +40,11 @@ export default function TodoItem({ todo }: TodoItemProps) {
       ) : (
         <>
           <div className="flex items-center gap-3">
-            <Checkbox id={todoId} checked={completed} />
+            <Checkbox
+              id={todoId}
+              checked={completed}
+              onCheckedChange={() => onToggleComplete(id)}
+            />
             <Label htmlFor={todoId}>{title}</Label>
           </div>
 
@@ -43,7 +53,7 @@ export default function TodoItem({ todo }: TodoItemProps) {
               <Edit size={14} />
               <span className="sr-only">Edit</span>
             </Button>
-            <Button variant="ghost">
+            <Button variant="ghost" onClick={() => onDelete(id)}>
               <Trash size={14} />
               <span className="sr-only">Delete</span>
             </Button>

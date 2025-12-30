@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import './App.css';
-import { Button } from './components/ui/button';
-import { todos as TODO_PLACEHOLDER } from './data';
-import type { Todo } from './types';
-import TodoList from './todo-list';
+import { useState } from "react";
+import "./App.css";
+import { Button } from "@/components/ui/button";
+import TodoList from "@/components/todo-list";
+import { todos as TODO_PLACEHOLDER } from "./data";
+import type { Todo } from "./types";
 
 /*
 App Scaffolding
@@ -44,10 +44,10 @@ TODO: Confirmation Dialog
 */
 
 function App() {
-  const [pendingTodo, setPendingTodo] = useState('');
   const [todos, setTodos] = useState<Todo[]>(TODO_PLACEHOLDER);
+  const [pendingTodo, setPendingTodo] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setTodos((prev) => {
@@ -56,7 +56,7 @@ function App() {
       const newTodo: Todo = {
         id: crypto.randomUUID(),
         title: pendingTodo,
-        category: 'Work',
+        category: "Work",
         completed: false,
         createdAt: timestamp,
         updatedAt: timestamp,
@@ -65,19 +65,23 @@ function App() {
       return [...prev, newTodo];
     });
 
-    setPendingTodo('');
-  }
+    setPendingTodo("");
+  };
 
-  function handleToggleTodo(id: string) {
+  const handleToggleComplete = (id: string) => {
     setTodos((prev) => {
       return prev.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo,
       );
     });
-  }
+  };
+
+  const handleDelete = (id: string) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   return (
-    <main className="bg-background flex min-h-screen max-w-6xl flex-col items-center gap-8 p-8 sm:p-6">
+    <main className="bg-background flex min-h-screen max-w-6xl mx-auto flex-col items-center gap-8 p-8 sm:p-6">
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-medium">Todo AI</h1>
         <p className="text-muted-foreground">
@@ -100,7 +104,11 @@ function App() {
         <Button type="submit">Add</Button>
       </form>
 
-      <TodoList todos={todos} handleToggleTodo={handleToggleTodo} />
+      <TodoList
+        todos={todos}
+        onToggleComplete={handleToggleComplete}
+        onDelete={handleDelete}
+      />
     </main>
   );
 }

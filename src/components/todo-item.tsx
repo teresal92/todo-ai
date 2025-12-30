@@ -31,6 +31,7 @@ export default function TodoItem({
           <Input id={todoId} value={title} />
           <Label htmlFor={todoId} className="sr-only"></Label>
           <Button variant="ghost" aria-label="Save">
+            {/* TODO: add ability to edit and save changes to TODO items */}
             <Save size={14} />
           </Button>
         </>

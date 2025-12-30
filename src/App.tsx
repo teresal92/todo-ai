@@ -80,6 +80,8 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  // TODO: Add ability to edit TODO item
+
   return (
     <main className="bg-background flex min-h-screen max-w-6xl mx-auto flex-col items-center gap-8 p-8 sm:p-6">
       <div className="text-center">

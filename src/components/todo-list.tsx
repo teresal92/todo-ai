@@ -5,12 +5,14 @@ interface TodoListProps {
   todos: Todo[];
   onToggleComplete: (id: string) => void;
   onDelete: (id: string) => void;
+  onUpdate: (id: string, updatedTodo: Partial<Todo>) => void;
 }
 
 export default function TodoList({
   todos,
   onToggleComplete,
   onDelete,
+  onUpdate,
 }: TodoListProps) {
   if (todos.length === 0) {
     return (
@@ -31,6 +33,7 @@ export default function TodoList({
             todo={todo}
             onDelete={onDelete}
             onToggleComplete={onToggleComplete}
+            onUpdate={onUpdate}
           />
         );
       })}

@@ -22,7 +22,7 @@ Todo List
   - Task Title
   - Category Badges
   - Checkbox to mark complete / not complete
-  - Drag & Drop
+  - Drag & Drop (future)
   - Edit Button with In-line Edit Form (simple)
   - AI Edit button
 
@@ -80,7 +80,20 @@ function App() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  // TODO: Add ability to edit TODO item
+  const handleUpdate = (id: string, updatedTodo: Partial<Todo>) => {
+    setTodos((prev) => {
+      return [...prev].map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            ...updatedTodo,
+          };
+        } else {
+          return todo;
+        }
+      });
+    });
+  };
 
   return (
     <main className="bg-background flex min-h-screen max-w-6xl mx-auto flex-col items-center gap-8 p-8 sm:p-6">
@@ -110,6 +123,7 @@ function App() {
         todos={todos}
         onToggleComplete={handleToggleComplete}
         onDelete={handleDelete}
+        onUpdate={handleUpdate}
       />
     </main>
   );

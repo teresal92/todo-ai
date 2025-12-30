@@ -10,28 +10,53 @@ interface TodoItemProps {
   todo: Todo;
   onToggleComplete: (id: string) => void;
   onDelete: (id: string) => void;
+  onUpdate: (id: string, updatedTodo: Partial<Todo>) => void;
 }
 
 export default function TodoItem({
   todo,
   onDelete,
   onToggleComplete,
+  onUpdate,
 }: TodoItemProps) {
   const { id, title, completed } = todo;
   const todoId = `todo-${id}`;
   const [isEditing, setIsEditing] = useState(false);
+  const [pendingTodo, setPendingTodo] = useState<Partial<Todo> | null>(null);
+
+  const handleSave = () => {
+    const timestamp = new Date().toISOString();
+
+    const updatedTodo = {
+      ...todo,
+      ...pendingTodo,
+      updatedAt: timestamp,
+    };
+
+    onUpdate(id, updatedTodo);
+    setIsEditing(false);
+    setPendingTodo(null);
+  };
 
   return (
     <li
       key={id}
-      className="flex items-center justify-between gap-3 rounded-sm p-4 outline-1"
+      className="flex items-center justify-between gap-2 rounded-sm p-4 outline-1"
     >
       {isEditing ? (
         <>
-          <Input id={todoId} value={title} />
           <Label htmlFor={todoId} className="sr-only"></Label>
-          <Button variant="ghost" aria-label="Save">
-            {/* TODO: add ability to edit and save changes to TODO items */}
+          <Input
+            id={todoId}
+            value={pendingTodo?.title ? pendingTodo.title : title}
+            onChange={(e) => {
+              setPendingTodo({
+                ...todo,
+                title: e.currentTarget.value,
+              });
+            }}
+          />
+          <Button variant="ghost" aria-label="Save" onClick={handleSave}>
             <Save size={14} />
           </Button>
         </>

@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+
 // Configure Vitest (https://vitest.dev/config/)
 
 import path from "path";
@@ -15,7 +16,8 @@ export default defineConfig({
     },
   },
   test: {
-    environment: "jsdom",
     globals: true,
+    environment: "jsdom",
+    setupFiles: ["./src/setupTests.ts"],
   },
 });

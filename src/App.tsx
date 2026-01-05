@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import { Button } from './components/ui/button';
+import { Button } from '@/components/ui/button';
+import TodoList from '@/components/todo-list';
 import { todos as TODO_PLACEHOLDER } from './data';
 import type { Todo } from './types';
 
@@ -21,7 +22,7 @@ Todo List
   - Task Title
   - Category Badges
   - Checkbox to mark complete / not complete
-  - Drag & Drop
+  - Drag & Drop (future)
   - Edit Button with In-line Edit Form (simple)
   - AI Edit button
 
@@ -43,11 +44,13 @@ TODO: Confirmation Dialog
 */
 
 function App() {
-  const [pendingTodo, setPendingTodo] = useState('');
   const [todos, setTodos] = useState<Todo[]>(TODO_PLACEHOLDER);
+  const [pendingTodo, setPendingTodo] = useState('');
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!pendingTodo.trim()) return;
 
     setTodos((prev) => {
       const timestamp = new Date().toISOString();
@@ -65,10 +68,35 @@ function App() {
     });
 
     setPendingTodo('');
-  }
+  };
+
+  const handleToggleComplete = (id: string) => {
+    setTodos((prev) => {
+      return prev.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      );
+    });
+  };
+
+  const handleDelete = (id: string) => {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  };
+
+  const handleUpdate = (id: string, updatedTodo: Partial<Todo>) => {
+    setTodos((prev) => {
+      return prev.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              ...updatedTodo,
+            }
+          : todo,
+      );
+    });
+  };
 
   return (
-    <main className="bg-background flex min-h-screen max-w-6xl flex-col items-center gap-8 p-8 sm:p-6">
+    <main className="bg-background mx-auto flex min-h-screen max-w-6xl flex-col items-center gap-8 p-8 sm:p-6">
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-medium">Todo AI</h1>
         <p className="text-muted-foreground">
@@ -91,12 +119,12 @@ function App() {
         <Button type="submit">Add</Button>
       </form>
 
-      {/* Todo List */}
-      <div className="flex w-full flex-col gap-4">
-        {todos.map((todo) => (
-          <div key={todo.id}>{todo.title}</div>
-        ))}
-      </div>
+      <TodoList
+        todos={todos}
+        onToggleComplete={handleToggleComplete}
+        onDelete={handleDelete}
+        onUpdate={handleUpdate}
+      />
     </main>
   );
 }

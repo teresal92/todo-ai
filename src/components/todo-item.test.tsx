@@ -50,7 +50,7 @@ describe('TodoItem', () => {
 
   it('should render text input with seeded initial task and should save new task', async () => {
     const user = userEvent.setup();
-    const initialTask = 'Initial test task';
+    const initialTask = TODO_ITEM.title;
     const newTask = 'New task!';
 
     render(
@@ -108,5 +108,26 @@ describe('TodoItem', () => {
     await user.click(checkbox);
 
     expect(onToggleComplete).toHaveBeenCalledOnce();
+  });
+
+  it('should call onDelete when delete button is clicked', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ol>
+        <TodoItem
+          todo={TODO_ITEM}
+          onUpdate={onUpdate}
+          onDelete={onDelete}
+          onToggleComplete={onToggleComplete}
+        />
+      </ol>,
+    );
+
+    expect(screen.getByText(TODO_ITEM.title)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /delete/i }));
+
+    expect(onDelete).toHaveBeenCalledOnce();
   });
 });

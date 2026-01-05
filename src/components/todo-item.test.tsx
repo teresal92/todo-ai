@@ -83,6 +83,7 @@ describe('TodoItem', () => {
 
     await user.click(screen.getByRole('button', { name: /save/i }));
 
+    expect(onUpdate).toHaveBeenCalledTimes(1);
     expect(onUpdate).toHaveBeenCalledWith(
       TODO_ITEM.id,
       expect.objectContaining({ id: TODO_ITEM.id, title: newTask }),
@@ -107,7 +108,8 @@ describe('TodoItem', () => {
 
     await user.click(checkbox);
 
-    expect(onToggleComplete).toHaveBeenCalledOnce();
+    expect(onToggleComplete).toHaveBeenCalledTimes(1);
+    expect(onToggleComplete).toHaveBeenCalledWith(TODO_ITEM.id);
   });
 
   it('should call onDelete when delete button is clicked', async () => {
@@ -128,6 +130,7 @@ describe('TodoItem', () => {
 
     await user.click(screen.getByRole('button', { name: /delete/i }));
 
-    expect(onDelete).toHaveBeenCalledOnce();
+    expect(onDelete).toHaveBeenCalledTimes(1);
+    expect(onDelete).toHaveBeenCalledWith(TODO_ITEM.id);
   });
 });

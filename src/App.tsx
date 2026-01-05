@@ -1,9 +1,9 @@
-import { useState } from "react";
-import "./App.css";
-import { Button } from "@/components/ui/button";
-import TodoList from "@/components/todo-list";
-import { todos as TODO_PLACEHOLDER } from "./data";
-import type { Todo } from "./types";
+import { useState } from 'react';
+import './App.css';
+import { Button } from '@/components/ui/button';
+import TodoList from '@/components/todo-list';
+import { todos as TODO_PLACEHOLDER } from './data';
+import type { Todo } from './types';
 
 /*
 App Scaffolding
@@ -45,7 +45,7 @@ TODO: Confirmation Dialog
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>(TODO_PLACEHOLDER);
-  const [pendingTodo, setPendingTodo] = useState("");
+  const [pendingTodo, setPendingTodo] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,7 +58,7 @@ function App() {
       const newTodo: Todo = {
         id: crypto.randomUUID(),
         title: pendingTodo,
-        category: "Work",
+        category: 'Work',
         completed: false,
         createdAt: timestamp,
         updatedAt: timestamp,
@@ -67,7 +67,7 @@ function App() {
       return [...prev, newTodo];
     });
 
-    setPendingTodo("");
+    setPendingTodo('');
   };
 
   const handleToggleComplete = (id: string) => {
@@ -96,7 +96,7 @@ function App() {
   };
 
   return (
-    <main className="bg-background flex min-h-screen max-w-6xl mx-auto flex-col items-center gap-8 p-8 sm:p-6">
+    <main className="bg-background mx-auto flex min-h-screen max-w-6xl flex-col items-center gap-8 p-8 sm:p-6">
       <div className="text-center">
         <h1 className="mb-4 text-4xl font-medium">Todo AI</h1>
         <p className="text-muted-foreground">

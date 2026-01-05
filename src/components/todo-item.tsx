@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import type { Todo } from "@/types";
-import { Trash, Edit, Save, X } from "lucide-react";
-import { useState } from "react";
-import { Input } from "./ui/input";
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import type { Todo } from '@/types';
+import { Trash, Edit, Save, X } from 'lucide-react';
+import { useState } from 'react';
+import { Input } from './ui/input';
 
 interface TodoItemProps {
   todo: Todo;

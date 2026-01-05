@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import { Button } from '@/components/ui/button';
 import TodoList from '@/components/todo-list';
+import TodoInput from '@/components/todo-input';
 import { todos as TODO_PLACEHOLDER } from './data';
 import type { Todo } from './types';
 
@@ -45,13 +45,8 @@ TODO: Confirmation Dialog
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>(TODO_PLACEHOLDER);
-  const [pendingTodo, setPendingTodo] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (!pendingTodo.trim()) return;
-
+  const onSubmit = (pendingTodo: string) => {
     setTodos((prev) => {
       const timestamp = new Date().toISOString();
 
@@ -66,8 +61,6 @@ function App() {
 
       return [...prev, newTodo];
     });
-
-    setPendingTodo('');
   };
 
   const handleToggleComplete = (id: string) => {
@@ -96,35 +89,22 @@ function App() {
   };
 
   return (
-    <main className="bg-background mx-auto flex min-h-screen max-w-6xl flex-col items-center gap-8 p-8 sm:p-6">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-medium">Todo AI</h1>
-        <p className="text-muted-foreground">
-          Add tasks naturally, let AI organize them
-        </p>
-      </div>
-
-      {/* Todo Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="flex w-full items-center justify-between gap-4 rounded-sm px-4 py-2 outline-1"
-      >
-        <input
-          type="text"
-          className="flex-1"
-          value={pendingTodo}
-          onChange={(e) => setPendingTodo(e.currentTarget.value)}
-          placeholder="Add a task...(e.g. 'need to book dentist appointment next week')"
+    <main className="bg-background px-4 py-12">
+      <div className="mx-auto max-w-5xl space-y-8">
+        <div className="space-y-2 text-center">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight">Todo AI</h1>
+          <p className="text-muted-foreground">
+            Add tasks naturally, let AI organize them
+          </p>
+        </div>
+        <TodoInput onSubmit={onSubmit} />
+        <TodoList
+          todos={todos}
+          onToggleComplete={handleToggleComplete}
+          onDelete={handleDelete}
+          onUpdate={handleUpdate}
         />
-        <Button type="submit">Add</Button>
-      </form>
-
-      <TodoList
-        todos={todos}
-        onToggleComplete={handleToggleComplete}
-        onDelete={handleDelete}
-        onUpdate={handleUpdate}
-      />
+      </div>
     </main>
   );
 }

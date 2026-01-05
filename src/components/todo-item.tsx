@@ -47,7 +47,7 @@ export default function TodoItem({
           <Label htmlFor={todoId} className="sr-only"></Label>
           <Input
             id={todoId}
-            value={pendingTodo?.title ? pendingTodo.title : title}
+            value={pendingTodo?.title ?? title}
             onChange={(e) => {
               setPendingTodo({
                 ...todo,

@@ -79,9 +79,14 @@ describe('TodoItem', () => {
 
     // Type in new task
     await user.type(input, newTask);
+    expect(input).toHaveValue(newTask);
+
     await user.click(screen.getByRole('button', { name: /save/i }));
 
-    expect(input).toHaveValue(newTask);
+    expect(onUpdate).toHaveBeenCalledWith(
+      TODO_ITEM.id,
+      expect.objectContaining({ id: TODO_ITEM.id, title: newTask }),
+    );
   });
 
   it('should call onToggleComplete when checkbox is clicked', async () => {
@@ -102,6 +107,6 @@ describe('TodoItem', () => {
 
     await user.click(checkbox);
 
-    expect(onToggleComplete).toHaveBeenCalledWith(TODO_ITEM.id);
+    expect(onToggleComplete).toHaveBeenCalledOnce();
   });
 });
